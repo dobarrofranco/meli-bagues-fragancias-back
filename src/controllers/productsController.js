@@ -18,6 +18,7 @@ const getProducts = async () => {
             gender: product.gender,
             replica: product.replica,
             stock: product.stock,
+            tribute: product.tribute,
             fragance: product.Fragances.map(fragance => fragance.name)
         }))
 
@@ -51,6 +52,7 @@ const getProductById = async (id) => {
             gender: product.gender,
             replica: product.replica,
             stock: product.stock,
+            tribute: product.tribute,
             fragance: product.Fragances.map(fragance => fragance.name)
         }))
 
@@ -61,12 +63,12 @@ const getProductById = async (id) => {
     }
 }
 
-const postProduct = async (name, description, price, image, gender, replica, stock, fragance) => {
+const postProduct = async (name, description, price, image, gender, replica, stock, tribute, fragance) => {
 
     try {
 
         const newProduct = await Product.create({
-            name, description, price, image, gender, replica, stock, fragance
+            name, description, price, image, gender, replica, stock, tribute, fragance
         });
 
         if (fragance) {

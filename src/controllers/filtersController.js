@@ -106,4 +106,80 @@ const filterByGender = async (req, res) => {
     }
 }
 
-module.exports = {orderName, orderPrice, filterByGender};
+const filterTribute = async (req, res) => {
+
+    const { tribute } = req.params;
+
+    try {
+        
+        const products = await Product.findAll({
+            where: {
+                [Op.and]: [
+                    {
+                        stock: {
+                            [Op.ne]: "0"
+                        }
+                    },
+                    {
+                        tribute: (tribute === 'true')
+                    }
+                ]
+            }
+        });
+
+        if (!products) {
+            return res.status(404).json({success: false})
+        }
+
+        return res.status(200).json(products);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const filterFragances = async (req, res) => {
+    const { fragance } = req.params;
+
+    try {
+        const products = await Product.findAll({
+            where: {
+                stock: {
+                    [Op.ne]: "0"
+                }
+            },
+            include: {
+                model: Fragance,
+                where: {
+                    name: fragance
+                }
+            }
+        });
+
+        if (!products || products.length === 0) {
+            return res.status(404).json({ success: false, message: 'No se encontraron productos para la fragancia proporcionada.' });
+        }
+
+        const cleanProducts = products.map(product => ({
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            image: product.image,
+            gender: product.gender,
+            replica: product.replica,
+            stock: product.stock,
+            tribute: product.tribute,
+            fragance: product.Fragances.map(fragance => fragance.name)
+        }));
+
+        return res.status(200).json(cleanProducts);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = {orderName, orderPrice, filterByGender, filterTribute, filterFragances};

@@ -18,6 +18,7 @@ const getFragances = async () => {
                 image: product.image,
                 gender: product.gender,
                 replica: product.replica,
+                tribute: product.tribute,
                 stock: product.stock,
             }))
         }))

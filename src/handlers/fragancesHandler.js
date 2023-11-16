@@ -1,4 +1,4 @@
-const {postFragance, getFragances, putFragance, deleteFragances, deleteFraganceByName} = require('../constrollers/fragancesController')
+const {postFragance, getFragances, putFragance, deleteFragances, deleteFraganceByName} = require('../controllers/fragancesController')
 
 const getFragancesHandler = async (req, res) => {
 

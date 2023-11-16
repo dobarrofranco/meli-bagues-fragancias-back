@@ -1,4 +1,4 @@
-const { postProduct, getProducts, putProducts, deleteProducts, deleteProductByName, getProductById, searchByName } = require('../constrollers/productsController')
+const { postProduct, getProducts, putProducts, deleteProducts, deleteProductByName, getProductById, searchByName } = require('../controllers/productsController')
 const { saveImage } = require('../middlewares/multerConfig');
 const cloudinary = require('../middlewares/cloudinary');
 
@@ -33,7 +33,7 @@ const getProductByIdHandler = async (req, res) => {
 
 const postProductHandler = async (req, res) => {
 
-    const { name, description, price, gender, replica, stock, fragance } = req.body
+    const { name, description, price, gender, replica, stock, tribute, fragance } = req.body
 
     try {
 
@@ -54,7 +54,7 @@ const postProductHandler = async (req, res) => {
             }
         }
 
-        const newProduct = await postProduct(name, description, price, image, gender, replica, stock, fragance);
+        const newProduct = await postProduct(name, description, price, image, gender, replica, stock, tribute, fragance);
 
         if (newProduct) {
             return res.status(200).json(newProduct);
@@ -126,10 +126,10 @@ const deleteProductByNameHandler = async (req, res) => {
         const deletedProduct = await deleteProductByName(name);
 
         if (!deletedProduct) {
-            return res.status(404).json({ message: `${name} product is not available` })
+            return res.status(404).json({ success: false })
         }
 
-        return res.status(200).json({ message: `product ${name} deleted` })
+        return res.status(200).json({ success: true })
 
     } catch (error) {
         res.status(500).json({ error: error.message });

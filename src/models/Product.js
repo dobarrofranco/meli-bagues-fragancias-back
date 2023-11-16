@@ -36,6 +36,10 @@ module.exports = (sequelize) => {
             stock: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            tribute: {
+                type: DataTypes.BOOLEAN,
+                allowNull: true
             }
         },
         { 
