@@ -47,7 +47,6 @@ const postProductHandler = async (req, res) => {
             try {
                 const result = await cloudinary.uploader.upload(req.file.path);
                 image = result.url;
-                console.log(result);
                 saveImage(req.file);
             } catch (error) {
                 console.log(error.message + ' cloudinary error');
